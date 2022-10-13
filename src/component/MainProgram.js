@@ -17,7 +17,7 @@ import ProposalTemplete from "./Programs/ProposalTemplete";
 const MainProgram= ()=>{
     const [current, setCurrent] = useState('programs');
      useEffect(()=>{
-         navigate('/programs/programs')
+         navigate('/programs')
      },[])
 
 const navigate = useNavigate()
@@ -51,8 +51,12 @@ const navigate = useNavigate()
     const onClick = (e) => {
         console.log('click ', e);
         setCurrent(e.key);
-
-        navigate(`/programs/${e.key}`)
+if(e.key === 'programs'){
+    navigate(`/programs`)
+}
+else {
+    navigate(`/programs/${e.key}`)
+}
     };
     // const navigate =useNavigate()
 
@@ -62,7 +66,7 @@ const navigate = useNavigate()
                 <Menu   mode="horizontal" items={items} selectedKeys={[current]} onClick={onClick}/>
 
                 <Routes>
-                    <Route path="/programs/programs" element={<Program />} />
+                    <Route path="/programs" element={<Program />} />
                     <Route path="/programs/application" element={<Application />} />
                     <Route path="/programs/autorizedagency" element={<AutorizedAgency />} />
                     <Route path="/programs/autorizedmga" element={<AutorizedMGA />} />
