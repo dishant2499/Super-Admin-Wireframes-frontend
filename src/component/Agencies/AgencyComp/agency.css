@@ -1,0 +1,12 @@
+.ant-table-thead .ant-table-cell{
+    color: white;
+    background-color: grey;
+
+}
+
+.ant-table-cell a{
+    color: black;
+}
+.ant-modal-footer{
+    text-align: center;
+}

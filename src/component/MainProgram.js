@@ -1,83 +1,60 @@
-import {Menu} from 'antd';
-import Program from "./Programs/Programs";
-import Application from "./Programs/Application";
-import {
-    BrowserRouter,
-    Routes,
-    Route,
-} from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import {useEffect,useState} from "react";
-import AutorizedAgency from "./Programs/AutorizedAgency";
-import AutorizedMGA from "./Programs/AutorizedMGA";
-import Commissions from "./Programs/Comissions";
-import ProposalTemplete from "./Programs/ProposalTemplete";
+import {Menu, Tabs} from "antd"
+import Program from "./Programs/Programs"
+import Application from "./Programs/Application"
+import React from "react"
+import AutorizedAgency from "./Programs/AutorizedAgency"
+import AutorizedMGA from "./Programs/AutorizedMGA"
+import Commissions from "./Programs/Comissions"
+import ProposalTemplete from "./Programs/ProposalTemplete"
 
 
-const MainProgram= ()=>{
-    const [current, setCurrent] = useState('programs');
-     useEffect(()=>{
-         navigate('/programs')
-     },[])
+const MainProgram = () => {
 
-const navigate = useNavigate()
+  const item = [
+    {
+      label: `Programs`,
+      key: "1",
+      children: <Program/>,
+    },
+    {
+      label: `Application`,
+      key: "2",
+      children: <Application/>,
+    },
+    {
+      label: `Authorized Agency`,
+      key: "3",
+      children: <AutorizedAgency/>,
+    },
+    {
+      label: `Authorized Mega`,
+      key: "4",
+      children: <AutorizedMGA/>,
+    },
+    {
+      label: `Commissions`,
+      key: "5",
+      children: <Commissions/>,
+    },
+    {
+      label: `Proposal Template`,
+      key: "6",
+      children: <ProposalTemplete/>,
+    },
+  ];
 
 
-    const items = [
-        {
-            label: 'Programs',
-            key: 'programs',
-
-        },
-        {
-            label: 'Application',
-            key: 'application',
-        },
-        {
-            label: 'Autorized Agency',
-            key: 'autorizedagency',
-        },{
-            label: 'Autorized MGA',
-            key: 'autorizedmga',
-        },{
-            label: 'Commissions',
-            key: 'commissions',
-        },{
-            label: 'Proposal Templete',
-            key: 'proposaltemplete',
-        },
-        ]
-
-    const onClick = (e) => {
-        console.log('click ', e);
-        setCurrent(e.key);
-if(e.key === 'programs'){
-    navigate(`/programs`)
-}
-else {
-    navigate(`/programs/${e.key}`)
-}
-    };
-    // const navigate =useNavigate()
-
-    return (
-        <>
-
-                <Menu   mode="horizontal" items={items} selectedKeys={[current]} onClick={onClick}/>
-
-                <Routes>
-                    <Route path="/programs" element={<Program />} />
-                    <Route path="/programs/application" element={<Application />} />
-                    <Route path="/programs/autorizedagency" element={<AutorizedAgency />} />
-                    <Route path="/programs/autorizedmga" element={<AutorizedMGA />} />
-                    <Route path="/programs/commissions" element={<Commissions />} />
-                    <Route path="/programs/proposaltemplete" element={<ProposalTemplete />} />
-
-                </Routes>
-
-            </>
-
-    )
+  return (
+    <>
+      <Tabs
+          defaultActiveKey="1"
+          style={{
+            marginLeft: "30px",
+          }}
+          items={item}
+      />
+    </>
+  )
 }
 
-export default MainProgram;
+export default MainProgram
