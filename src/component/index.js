@@ -1,9 +1,9 @@
 import { CloseCircleOutlined } from "@ant-design/icons"
 import { Breadcrumb, Layout, Menu, Button } from "antd"
 import Box from "@mui/material/Box"
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import "antd/dist/antd.css"
-import MainProgram from "./MainProgram"
+import MainProgram from "./Programs/MainProgram"
 import Typography from "@mui/material/Typography"
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import AgenciesMenu from "./Agencies/AgenciesMenu"
@@ -39,6 +39,7 @@ const Index = () => {
     setCurrent(e.key)
     navigate(`/${e.key}`)
   }
+  console.log(current)
 
   return (
     <Layout style={{ height: "100vh", backgroundColor: "grey" }}>

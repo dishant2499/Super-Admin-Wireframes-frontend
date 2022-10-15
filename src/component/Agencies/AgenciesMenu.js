@@ -4,28 +4,26 @@ import { useEffect, useState } from "react"
 import GetAgency from "./AgencyComp/getAgencies"
 import GetAgent from "./AgentComp/getAgent";
 
-const AgenciesMenu = () => {
+const AgenciesMenu = ({onChange}) => {
   const item = [
     {
       label: `Agencies`,
-      key: "1",
+      key: "agencies",
       children: <GetAgency />,
     },
     {
       label: `Agent`,
-      key: "2",
+      key: "agent",
       children: <GetAgent />,
     },
   ];
 
-  const onChange = (key) => {
-    console.log(key)
-  }
+
 
   return (
     <>
       <Tabs
-        defaultActiveKey="1"
+        defaultActiveKey="agencies"
         style={{
           marginLeft: "30px",
         }}

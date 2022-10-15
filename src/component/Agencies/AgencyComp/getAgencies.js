@@ -77,7 +77,7 @@ const GetAgency = () => {
       >
         <AddAgency />
         <Button type="text" icon={<FilterOutlined />} size={"middle "}>
-          z filter
+          filter
         </Button>
       </div>
       <div
