@@ -2,8 +2,9 @@
 import { FilterOutlined,DashOutlined} from '@ant-design/icons';
 import {Space, Table, Typography, Button, Modal, Popconfirm, Form, Input, Select} from 'antd';
 import './Program.css'
+import axios from "axios";
 import AddProgram from "./addProgram";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 const { Option } = Select;
 
 
@@ -15,11 +16,23 @@ const Program = ()=>  {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const [tableData,setTableData]= useState([])
+    const [editData,setEditData]= useState({})
 
     const validateMessages = {
         required: '${label} is required!',
 
     };
+    useEffect(()=>{
+        getData()
+    },[])
+
+const getData = async ()=>{
+    const Programdata =await axios.get('http://localhost:3002/programDataList')
+    // const newdata = JSON.parse(Programdata.data)
+    setTableData(Programdata.data)
+    console.log(Programdata.data)
+}
 
     const columns = [
         {
@@ -43,36 +56,27 @@ const Program = ()=>  {
             title: 'Action',
             key: 'Action',
             align: 'right',
-            render: () => (
+            render: (list) => {
+                // console.log(list)
+                return(
                 <Space size="middle">
                     <Button>Button 1</Button>
                     <Button>Button 2</Button>
-                    <DashOutlined onClick={()=>setIsModalOpen(!isModalOpen)} />
+
+                    <Popconfirm cancelButtonProps={{ style: { display: 'none' } }}  okButtonProps={{ style: { display: 'none' } }}
+                                placement="left" title={ <div style={{
+                        height:'50px',
+                        display:'flex',
+                        flexDirection:'column'
+                    }} >
+                        <a onClick={()=>Draweropen(list)}>edit</a>
+                        <a>remove</a>
+                    </div>} onConfirm={isModalOpen}>
+
+                        <DashOutlined onClick={()=>setIsModalOpen(!isModalOpen)} />
+                    </Popconfirm>
                 </Space>
-            ),
-        },
-    ];
-    const data = [
-        {
-            key: '1',
-            ProgramName: 'Health Insurance',
-            CovrageType:['Life','Health'],
-            Status: 'Active',
-            Action: ['nice', 'developer'],
-        },
-        {
-            key: '2',
-            ProgramName: 'Life Insurance',
-            CovrageType:"Life,Health",
-            Status: 'Active',
-            Action: ['loser'],
-        },
-        {
-            key: '3',
-            ProgramName: 'Travel Insurance',
-            CovrageType: "Life,Health",
-            Status: 'Active',
-            Action: ['cool', 'teacher'],
+            )},
         },
     ];
 
@@ -85,7 +89,9 @@ const Program = ()=>  {
         console.log(`selected ${value}`);
     };
 
-    const Draweropen = ()=>{
+    const Draweropen = (list)=>{
+        console.log(list)
+        setEditData(list)
         setIsEditOpen(true)
         setIsModalOpen(false)
     }
@@ -93,6 +99,7 @@ const Program = ()=>  {
 
     return (
         <>
+
         <div style={{margin:'10px',display:'flex',justifyContent:"space-between"}}>
         <AddProgram/>
             <Button type="text" icon={<FilterOutlined />} size={"middle "} >
@@ -102,21 +109,22 @@ const Program = ()=>  {
         <div style={{
             margin:'10px'
         }}>
-            <Table columns={columns} dataSource={data}  pagination={false} />
+            <Table columns={columns} dataSource={tableData}  pagination={false} />
         </div>
             <div style={{margin:'10px'}}>
-                <Text>showing 3 out of {data.length}</Text>
+                <Text>showing {tableData.length} out of {tableData.length}</Text>
             </div>
-            <Modal  open={isModalOpen}  onCancel={()=> setIsModalOpen(false)} footer={null} width={125} >
-                <div style={{
-                    height:'50px',
-                    display:'flex',
-                    flexDirection:'column'
-                }}>
-<a onClick={Draweropen}>edit</a>
-                <a>remove</a>
-                </div>
-            </Modal>
+
+{/*            <Modal  open={isModalOpen}  onCancel={()=> setIsModalOpen(false)} footer={null} width={125} >*/}
+{/*                <div style={{*/}
+{/*                    height:'50px',*/}
+{/*                    display:'flex',*/}
+{/*                    flexDirection:'column'*/}
+{/*                }}>*/}
+{/*<a onClick={Draweropen}>edit</a>*/}
+{/*                <a>remove</a>*/}
+{/*                </div>*/}
+{/*            </Modal>*/}
             <Modal
                 title="Create Program"
                 centered
@@ -135,7 +143,7 @@ const Program = ()=>  {
                                 },
                             ]}
                         >
-                            <Input placeholder="Health insurance platinum" />
+                            <Input placeholder="Health insurance platinum" defaultValue={editData.ProgramName}/>
                         </Form.Item>
 
                         <Form.Item
@@ -151,7 +159,7 @@ const Program = ()=>  {
                         >
                             <Select placeholder="Choose industry"  mode="multiple"
                                     allowClear
-                                    defaultValue={[]}
+                                    defaultValue={editData.chooseindustry}
                                     onChange={handleChange}
                             >
                                 <Option value="jack1">Jack1</Option>
@@ -172,7 +180,7 @@ const Program = ()=>  {
                             <Select placeholder="Choose States"
                                     mode="multiple"
                                     allowClear
-                                    defaultValue={[]}
+                                    defaultValue={editData.choosestates}
                             >
                                 <Option value="jack">Jack</Option>
                                 <Option value="lucy">Lucy</Option>
@@ -192,7 +200,7 @@ const Program = ()=>  {
                             <Select placeholder="Choose covrage Types"
                                     mode="multiple"
                                     allowClear
-                                    defaultValue={[]}
+                                    defaultValue={editData.CovrageType}
                             >
                                 <Option value="jack">Jack</Option>
                                 <Option value="lucy">Lucy</Option>
@@ -208,15 +216,14 @@ const Program = ()=>  {
                                     required: true,
                                 },
                             ]}
+
                         >
                             <Select placeholder="Choose Status"
-                                    mode="multiple"
-                                    allowClear
-                                    defaultValue={[]}
+                                    defaultValue={editData.Status}
                             >
-                                <Option value="jack">Jack</Option>
-                                <Option value="lucy">Lucy</Option>
-                                <Option value="tom">Tom</Option>
+                                <Option value="Active">Active</Option>
+                                <Option value="InActive">InActive</Option>
+
                             </Select>
                         </Form.Item>
 

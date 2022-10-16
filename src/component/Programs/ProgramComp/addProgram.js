@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import axios from "axios";
 
 import {Button, Form, Input, Modal, Select} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
@@ -12,8 +13,12 @@ const validateMessages = {
 const AddProgram = ()=>{
     const [modal2Open, setModal2Open] = useState(false);
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log(values);
+        const addData =await axios.post('http://localhost:3002/program',values)
+
+        console.log(addData);
+        setModal2Open(false)
     };
 
     const handleChange = (value) => {
@@ -122,13 +127,11 @@ const AddProgram = ()=>{
                             ]}
                         >
                             <Select placeholder="Choose Status"
-                                    mode="multiple"
-                                    allowClear
-                                    defaultValue={[]}
+
                             >
-                                <Option value="jack">Jack</Option>
-                                <Option value="lucy">Lucy</Option>
-                                <Option value="tom">Tom</Option>
+                                <Option value="Active">Active</Option>
+                                <Option value="InActive">InActive</Option>
+
                             </Select>
                         </Form.Item>
 
