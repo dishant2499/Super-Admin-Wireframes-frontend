@@ -9,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import {useEffect,useState} from "react";
 import AutorizedAgency from "./AutorizedAgency";
-import AutorizedMGA from "./AutorizedMGA";
+import AutorizedMGA from "./AutorizedMGAComp/AutorizedMGA";
 import Commissions from "./Comissions";
 import ProposalTemplete from "./ProposalTemplete";
 
