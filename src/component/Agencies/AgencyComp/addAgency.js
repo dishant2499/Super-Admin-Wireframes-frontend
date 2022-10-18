@@ -15,10 +15,17 @@ import {
 
 const AddAgency = () => {
   const [isModelOpen, setIsModelOpen] = useState(false)
+  const [form] = Form.useForm()
 
   const onFinish = (values) => {
     setIsModelOpen(false)
+    form.resetFields()
     console.log("Received values of form: ", values)
+  }
+
+  const onReset = () => {
+    form.resetFields()
+    setIsModelOpen(false)
   }
 
   return (
@@ -31,52 +38,61 @@ const AddAgency = () => {
       >
         Add Agency
       </Button>
-      <Modal title="Add Agency"
-             centered open={isModelOpen}
-             width={500}
-             okButtonProps={{
-                 hidden: true,
-             }}
-             cancelButtonProps={{
-                 hidden: true,
-             }}>
+      <Modal
+        title="Add Agency"
+        centered
+        open={isModelOpen}
+        width={500}
+        okButtonProps={{
+          hidden: true,
+        }}
+        cancelButtonProps={{
+          hidden: true,
+        }}
+      >
         <div style={{ height: "70%" }}>
           <Form
             name="complex-form"
+            form={form}
             onFinish={onFinish}
             labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}>
+            wrapperCol={{ span: 16 }}
+          >
             <Form.Item
-                style={{
-                  marginBottom: 0,
-                }}
+              style={{
+                marginBottom: 0,
+              }}
             >
               <Form.Item
-                  name="name"
-                  rules={[
-                    {
-                      required: true,message: "Please Enter Agency Name"
-                    },
-                  ]}
-                  style={{
-                    display: 'inline-block',
-                    width: 'calc(50% - 8px)',
-                  }}
+                name="name"
+                label="Name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Agency Name",
+                  },
+                ]}
+                style={{
+                  display: "inline-block",
+                  width: "200px",
+                }}
               >
                 <Input placeholder="Kaiwalya Health Agency" />
               </Form.Item>
               <Form.Item
-                  name="phone"
-                  rules={[
-                    {
-                      required: true, message: "Please Enter Your Phone Number"
-                    },
-                  ]}
-                  style={{
-                    display: 'inline-block',
-                    width: 'calc(50% - 10px)',
-                    margin: '0 8px',
-                  }}
+                name="phone"
+                label="Phone"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Your Phone Number",
+                  },
+                ]}
+                style={{
+                  display: "inline-block",
+                  width: "200px",
+                  margin: "0 8px",
+                }}
               >
                 <Input placeholder="020 345 657" />
               </Form.Item>
@@ -85,47 +101,54 @@ const AddAgency = () => {
               <Input.Group compact>
                 <Form.Item
                   name="email"
-                  noStyle
+                  label="email"
                   rules={[{ required: true, message: "Please Enter Your Email" }]}
+                  style={{
+                    marginBottom: 0,
+                  }}
                 >
                   <Input
-                    style={{ width: 'calc(90% - 8px)' }}
+                    style={{ width: "300px" }}
                     placeholder="kaiyvayasecure@gmail.com"
                   />
                 </Form.Item>
               </Input.Group>
             </Form.Item>
             <Form.Item
-                style={{
-                  marginBottom: 0,
-                }}
+              style={{
+                marginBottom: 0,
+              }}
             >
               <Form.Item
-                  name="contact_person"
-                  rules={[
-                    {
-                      required: true,message: "Please Enter Contact Person Name"
-                    },
-                  ]}
-                  style={{
-                    display: 'inline-block',
-                    width: 'calc(50% - 8px)',
-                  }}
+                name="contact_person"
+                label="C Person"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Contact Person Name",
+                  },
+                ]}
+                style={{
+                  display: "inline-block",
+                  width: "200px",
+                }}
               >
                 <Input placeholder="Arpit Ribadiya" />
               </Form.Item>
               <Form.Item
-                  name="contact_person_role"
-                  rules={[
-                    {
-                      required: true, message: "Please Enter Contact Person Role"
-                    },
-                  ]}
-                  style={{
-                    display: 'inline-block',
-                    width: 'calc(50% - 10px)',
-                    margin: '0 8px',
-                  }}
+                name="contact_person_role"
+                label="C P Role"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Contact Person Role",
+                  },
+                ]}
+                style={{
+                  display: "inline-block",
+                  width: "200px",
+                  margin: "0 8px",
+                }}
               >
                 <Input placeholder="CEO" />
               </Form.Item>
@@ -133,52 +156,112 @@ const AddAgency = () => {
             <Form.Item>
               <Input.Group compact>
                 <Form.Item
-                    name="address"
-                    noStyle
-                    rules={[{ required: true, message: "Please Enter Your Address" }]}
+                  style={{
+                    marginBottom: 0,
+                  }}
+                  name="address"
+                  label="Address"
+                  rules={[{ required: true, message: "Please Enter Your Address" }]}
                 >
                   <Input
-                      style={{ width: 'calc(90% - 8px)' }}
-                      placeholder="201,panchashil,commercial Hub"
+                    style={{ width: "200px" }}
+                    placeholder="201,panchashil,commercial Hub"
                   />
                 </Form.Item>
               </Input.Group>
             </Form.Item>
             <Form.Item
-                style={{
-                  marginBottom: 0,
-                }}
+              style={{
+                marginBottom: 0,
+              }}
             >
               <Form.Item
-                  name="name"
-                  rules={[
-                    {
-                      required: true,message: "Please Enter Agency Name"
-                    },
-                  ]}
-                  style={{
-                    display: 'inline-block',
-                    width: 'calc(50% - 8px)',
-                  }}
+                name="city"
+                label="City"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Agency Name",
+                  },
+                ]}
+                style={{
+                  display: "inline-block",
+                  width: "200px",
+                }}
               >
-
                 <Select placeholder="Choose Role">
                   <Select.Option value="Admin">Admin</Select.Option>
                   <Select.Option value="Normal">Normal</Select.Option>
                 </Select>
               </Form.Item>
               <Form.Item
-                  name="phone"
-                  rules={[
-                    {
-                      required: true, message: "Please Enter Your Phone Number"
-                    },
-                  ]}
-                  style={{
-                    display: 'inline-block',
-                    width: 'calc(50% - 10px)',
-                    margin: '0 8px',
-                  }}
+                name="state"
+                label="State"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter State",
+                  },
+                ]}
+                style={{
+                  display: "inline-block",
+                  width: "calc(50% - 10px)",
+                  margin: "0 8px",
+                }}
+              >
+                <Select placeholder="Choose State">
+                  <Select.Option value="Gujrat">Gujrat</Select.Option>
+                  <Select.Option value="Goa">Goa</Select.Option>
+                  <Select.Option value="Rajsthan">Rajsthan</Select.Option>
+                </Select>
+              </Form.Item>
+            </Form.Item>
+            <Form.Item
+              style={{
+                marginBottom: 0,
+              }}
+            >
+              <Form.Item
+                name="logo"
+                label="logo"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Add Logo",
+                  },
+                ]}
+                style={{
+                  display: "inline-block",
+                  width: "200px",
+                }}
+              >
+                <Upload listType="picture-card">
+                  <div>
+                    <PlusOutlined />
+                    <div
+                      style={{
+                        marginTop: 8,
+                      }}
+                    >
+                      Upload
+                    </div>
+                  </div>
+                </Upload>
+              </Form.Item>
+              <Form.Item
+                name="status"
+                label="Status"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please Enter Status",
+                  },
+                ]}
+                style={{
+                  display: "inline-block",
+                  width: "200px",
+                  margin: "0 8px",
+                }}
               >
                 <Select placeholder="Choose Status">
                   <Select.Option value="Active">Active</Select.Option>
@@ -186,56 +269,26 @@ const AddAgency = () => {
                 </Select>
               </Form.Item>
             </Form.Item>
-            <Form.Item
-                style={{
-                  marginBottom: 0,
-                }}
-            >
-              <Form.Item
-                  name="contact_person"
-                  rules={[
-                    {
-                      required: true,message: "Please Enter Contact Person Name"
-                    },
-                  ]}
-                  style={{
-                    display: 'inline-block',
-                    width: 'calc(50% - 8px)',
-                  }}
-              >
-                <Input placeholder="Arpit Ribadiya" />
-              </Form.Item>
-              <Form.Item
-                  name="contact_person_role"
-                  rules={[
-                    {
-                      required: true, message: "Please Enter Contact Person Role"
-                    },
-                  ]}
-                  style={{
-                    display: 'inline-block',
-                    width: 'calc(50% - 10px)',
-                    margin: '0 8px',
-                  }}
-              >
-                <Input placeholder="CEO" />
-              </Form.Item>
-            </Form.Item>
             <Form.Item label=" " colon={false}>
-              <Button onClick={() => setIsModelOpen(false)}
-                      style={{
-                          width:'100px',
-                          borderRadius:'5px',
-                      }}>Cancle</Button>
+              <Button
+                htmlType="button"
+                onClick={onReset}
+                style={{
+                  width: "100px",
+                  borderRadius: "5px",
+                }}
+              >
+                Cancle
+              </Button>
               <Button
                 type="primary"
                 htmlType="submit"
                 style={{
-                    width:'100px',
-                    backgroundColor: "black",
-                    color: "white",
-                    marginLeft: "20px",
-                    borderRadius:'5px'
+                  width: "100px",
+                  backgroundColor: "black",
+                  color: "white",
+                  marginLeft: "20px",
+                  borderRadius: "5px",
                 }}
               >
                 Add
